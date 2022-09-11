@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/auth/auth.router')
 const userRouter = require('./routes/user/user.router')
 const catRouter = require('./routes/category/category.router')
+const productRouter = require('./routes/product/product.router')
 const app = express()
 
 app.use(cors())
@@ -18,6 +19,7 @@ app.use(cookieParser())
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/category', catRouter)
+app.use('/product', productRouter)
 
 app.get('/', (req, res) => {
   // Cookies that have not been signed
