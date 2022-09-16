@@ -10,7 +10,7 @@ authRouter.get('/', authenticateJWT, (req, res) => {
   res.status(200).json({ message: 'authorized access' })
 })
 authRouter.get('/logout', signOut)
-authRouter.post('/login', login)
+authRouter.post('/login', validate(schemas.loginSchema), login)
 authRouter.post('/register', validate(schemas.userSchema), registerUser)
 
 module.exports = authRouter

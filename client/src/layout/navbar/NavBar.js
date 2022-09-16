@@ -1,28 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from 'react-bootstrap/NavBar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
-import { useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { isAuth, logoutUser } from '../../features/services/authRequests'
+import { firstUpperCase } from '../../features/utils/firstUpperCase'
 export const NavBar = () => {
+  const [auth, setAuth] = useState(isAuth())
+  const navigate = useNavigate()
   const location = useLocation()
-  console.log(location.pathname)
+  const handleClick = () => {
+    logoutUser(() => {
+      if (!auth) {
+        navigate('/login')
+      } else {
+        navigate('/')
+      }
+      setAuth(false)
+    })
+  }
+
   return (
-    <Navbar expand='md' bg='primary' variant='dark' className='mb-3'>
+    <Navbar
+      collapseOnSelect
+      expand='md'
+      bg='primary'
+      variant='dark'
+      className='mb-3'
+    >
       <Container>
-        <Navbar.Brand href='/'>Bookstore</Navbar.Brand>
+        <Link to='/' className='navbar-brand'>
+          Bookstore
+        </Link>
         <Navbar.Toggle area-aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav
-            activeKey={location.pathname}
-            className='justify-content-end flex-grow-1 pe-3'
-          >
-            <Nav.Link href='/'>Home</Nav.Link>
-            <Nav.Link href='/login' eventKey='/login'>
-              Login
-            </Nav.Link>
-            <Nav.Link href='/register' eventKey='/register'>
-              Register
-            </Nav.Link>
+          <Nav className='justify-content-end flex-grow-1 pe-3'>
+            <Link
+              className={`nav-item nav-link ${
+                location.pathname === '/' ? 'active' : ''
+              }`}
+              to='/'
+            >
+              Home
+            </Link>
+            {!auth && (
+              <>
+                <Link
+                  className={`nav-item nav-link ${
+                    location.pathname === '/login' ? 'active' : ''
+                  }`}
+                  to='/login'
+                >
+                  Login
+                </Link>
+                <Link
+                  className={`nav-item nav-link ${
+                    location.pathname === '/register' ? 'active' : ''
+                  }`}
+                  to='/register'
+                >
+                  Register
+                </Link>
+              </>
+            )}
+            {auth && (
+              <>
+                <Link
+                  className={`nav-item nav-link ${
+                    location.pathname === '/dashboard' ? 'active' : ''
+                  }`}
+                  to='/dashboard'
+                >
+                  Dashboard
+                </Link>
+                <Navbar.Text
+                  className='nav-item nav-link'
+                  style={{ cursor: 'pointer' }}
+                  onClick={handleClick}
+                >
+                  Logout
+                </Navbar.Text>
+                <Navbar.Text
+                  className='nav-item nav-link active'
+                  style={{ cursor: 'pointer' }}
+                >
+                  {auth.user.name && firstUpperCase(auth.user.name)}
+                </Navbar.Text>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

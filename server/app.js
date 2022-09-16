@@ -9,7 +9,11 @@ const catRouter = require('./routes/category/category.router')
 const productRouter = require('./routes/product/product.router')
 const app = express()
 
-app.use(cors())
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+  })
+)
 app.use(helmet())
 app.use(morgan('tiny'))
 app.use(express.json())

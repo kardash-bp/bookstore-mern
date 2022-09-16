@@ -4,13 +4,11 @@ async function login(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email })
     if (!user) {
-      return res
-        .status(400)
-        .json({ err: 'User with that email does not exist.' })
+      return res.status(400).json('User with that email does not exist.')
     }
     // user found check password
     if (!user.authenticate(req.body.password)) {
-      return res.status(400).json({ err: 'Wrong credentials.' })
+      return res.status(400).json('Wrong credentials.')
     }
     //console.log(user)
     // create token & add to cookie
@@ -24,6 +22,9 @@ async function login(req, res) {
 }
 // =================================================
 async function registerUser(req, res) {
+  if (req.body.error) {
+    return res.status(400).json(req.body.error)
+  }
   let newUser = new User(req.body)
 
   try {

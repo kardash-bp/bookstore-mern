@@ -1,5 +1,5 @@
 import React from 'react'
-import { API } from '../config'
+import LoginForm from '../features/UI/LoginForm'
 import AppLayout from '../layout/appLayout/AppLayout'
 
 const Login = () => {
@@ -7,8 +7,9 @@ const Login = () => {
     <AppLayout
       title='Login'
       description='Login & Access the most comprehensive bookshop '
+      className='container col-md-8 offset-md-2'
     >
-      ...API: {API}
+      <LoginForm />
     </AppLayout>
   )
 }
