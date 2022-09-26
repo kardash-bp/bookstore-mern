@@ -11,11 +11,12 @@ const AppLayout = ({
   return (
     <>
       <NavBar />
+      <div className='px-5 pt-5 mb-5 jumbotron'>
+        <h2 className='display-4'>{title}</h2>
+        <p className='lead'>{description}</p>
+        <hr className='my-4'></hr>
+      </div>
       <Container>
-        <div className='jumbotron'>
-          <h2>{title}</h2>
-          <p className='lead'>{description}</p>
-        </div>
         <div className={className}>{children}</div>
       </Container>
     </>

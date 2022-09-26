@@ -1,13 +1,14 @@
 const { errorHandler } = require('../../utils/dbErrorHandler')
 const Category = require('../../models/category.model')
 async function addCategory(req, res) {
+  console.log(req.body.name)
   try {
-    const category = await Category.create(req.body.category)
+    const category = await Category.create({ name: req.body.name })
     if (!category) {
       throw new Error("Category isn't created")
     }
 
-    res.status(200).json({ category })
+    res.status(200).json(category)
   } catch (error) {
     return res.status(400).json({ error: error.message })
   }
@@ -47,7 +48,7 @@ async function allCategories(req, res) {
   try {
     const cat = await Category.find({}, '_id, name')
     req.categories = cat
-    res.json({ categories: req.categories })
+    res.json(cat)
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+:root {
+  --bg-light: #eae7dc;
+  --red: #e45b51;
+  --red-light: #e98074;
+  --grey: #777674;
+  --vanilla: #dacdbc;
+  --eggshell: #f0ece0;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--grey);
+  background-color: var(--bg-light);
+}
+nav.navbar {
+  background-color: var(--vanilla);
+}
+.jumbotron {
+  margin: 0 auto;
+  width: 90vw;
+  max-width: 1400px;
+  height: 30vh;
+}
+h2 {
+  color: var(--red);
+}
+div.card {
+  background-color: var(--vanilla);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+button.btn-card {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  color: var(--vanilla);
+  background-color: var(--grey);
+  border: 0.15rem solid var(--grey);
+  border-radius: 0.3rem;
+  transition: all 0.3s;
+}
+button.btn-card:hover {
+  color: var(--red-light);
+  background-color: var(--vanilla);
+  border: 0.15rem solid var(--red-light);
+}
+img.card-img-top {
+  padding-top: 1rem;
+  width: 100%;
+  height: 40vh;
+  min-height: 300px;
+  object-fit: contain;
+}
+div.card:hover {
+  transform: scale(1.05);
+  -webkit-box-shadow: 1px 3px 15px -1px rgba(0, 0, 0, 0.74);
+  box-shadow: 1px 3px 15px -1px rgba(0, 0, 0, 0.74);
+  z-index: 99;
+}
+/* checkbox color */
+.form-check-input[type='checkbox'] {
+  background-color: var(--bg-light);
+  border-color: var(--grey);
+}
+.form-check-input[type='checkbox']:checked {
+  background-color: var(--grey);
+  border-color: var(--grey);
+}
+.form-check-input[type='checkbox']:focus {
+  box-shadow: 0 0 0 0.25rem rgba(61, 61, 61, 0.25);
+}

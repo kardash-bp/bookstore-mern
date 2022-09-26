@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/kardash-bp/bookstore-mern/issues"
   },
-  "homepage": "https://github.com/kardash-bp/bookstore-mern#readme"
+  "homepage": "https://github.com/kardash-bp/bookstore-mern#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
 }

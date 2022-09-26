@@ -19,13 +19,14 @@ function getProduct(req, res) {
 }
 
 function addProduct(req, res) {
-  console.log('start')
+  console.log(req.body)
   let form = new formidable.IncomingForm()
   // Basic Configuration
   form.keepExtensions = true
   form.multiples = true
   form.parse(req, async (err, fields, files) => {
     if (err) {
+      console.log(err.message)
       return res.status(400).json({ error: 'Image could not be uploaded' })
     }
     let product = new Product(fields)
@@ -42,7 +43,7 @@ function addProduct(req, res) {
       return res.status(400).json({ error: 'All fields are required.' })
     }
 
-    if (files.photo.size > 1 * 1024 * 1024) {
+    if (files.photo && files.photo.size > 1 * 1024 * 1024) {
       return res.status(400).json({ error: 'Image should be less than 1mb' })
     }
     if (files.photo && isFileValid(files.photo)) {
@@ -147,7 +148,7 @@ async function productsList(req, res) {
       .populate('category')
       .sort([[sortBy, order]])
       .limit(limit)
-    console.log(prod)
+    // console.log(prod)
     res.status(200).json(prod)
   } catch (err) {
     return res
@@ -201,7 +202,7 @@ async function productsSearch(req, res) {
   let findArgs = {}
 
   console.log(order, sortBy, limit, skip, req.body.filters)
-  console.log('findArgs', findArgs)
+  console.log(req.body)
 
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
@@ -224,6 +225,11 @@ async function productsSearch(req, res) {
       .sort([[sortBy, order]])
       .skip(skip)
       .limit(limit)
+
+    if (!data) {
+      return res.status(400).json({ error: `Didn't find anything.` })
+    }
+
     res.status(200).json({ size: data.length, data })
   } catch (err) {
     res.status(400).json({ error: `Didn't find anything. - ${err.message}` })

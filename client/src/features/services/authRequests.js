@@ -87,3 +87,15 @@ export const isAuth = () => {
     return false
   }
 }
+export const isAdmin = () => {
+  if (typeof window === 'undefined') return false
+
+  if (
+    localStorage.getItem('jwt') &&
+    JSON.parse(localStorage.getItem('jwt')).user.role === 1
+  ) {
+    return JSON.parse(localStorage.getItem('jwt'))
+  } else {
+    return false
+  }
+}

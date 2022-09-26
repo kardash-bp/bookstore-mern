@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const { authenticateJWT, isAdmin } = require('../../middlewareFn/authJWT')
+const { userById } = require('../user/user.controller')
 const {
   category,
   addCategory,
@@ -10,9 +11,10 @@ const {
 } = require('./category.controller')
 const catRouter = Router()
 catRouter.param('categoryId', getCategoryById)
+catRouter.param('userId', userById)
 catRouter.get('/:categoryId', category)
-catRouter.get('/', authenticateJWT, isAdmin, allCategories)
-catRouter.post('/create', authenticateJWT, isAdmin, addCategory)
+catRouter.get('/', allCategories)
+catRouter.post('/create/:userId', authenticateJWT, isAdmin, addCategory)
 catRouter.put('/update/:categoryId', authenticateJWT, isAdmin, updateCategory)
 catRouter.delete(
   '/delete/:categoryId',

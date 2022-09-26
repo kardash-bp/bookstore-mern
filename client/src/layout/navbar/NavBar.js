@@ -21,13 +21,7 @@ export const NavBar = () => {
   }
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand='md'
-      bg='primary'
-      variant='dark'
-      className='mb-3'
-    >
+    <Navbar collapseOnSelect expand='md'>
       <Container>
         <Link to='/' className='navbar-brand'>
           Bookstore
@@ -42,6 +36,14 @@ export const NavBar = () => {
               to='/'
             >
               Home
+            </Link>
+            <Link
+              className={`nav-item nav-link ${
+                location.pathname === '/shop' ? 'active' : ''
+              }`}
+              to='/shop'
+            >
+              Shop
             </Link>
             {!auth && (
               <>
