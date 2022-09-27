@@ -4,6 +4,8 @@ import { prices } from '../../features/prices/fixedPricesRange'
 import Checkbox from '../../features/UI/Checkbox'
 
 const ShopSidebar = ({ categories, filtersHandler }) => {
+  console.log('side rendered')
+
   return (
     <Col md={4}>
       <h5 className='mb-3'>Filtered by categories</h5>
@@ -26,4 +28,4 @@ const ShopSidebar = ({ categories, filtersHandler }) => {
   )
 }
 
-export default ShopSidebar
+export default React.memo(ShopSidebar)

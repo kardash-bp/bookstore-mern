@@ -4,6 +4,7 @@ import { isAdmin, isAuth } from './features/services/authRequests'
 import ProtectedRoute from './features/utils/ProtectedRoute'
 import AddCategory from './pages/admin/AddCategory'
 import AddProduct from './pages/admin/AddProduct'
+import BookSingle from './pages/BookSingle.js'
 import Dashboard from './pages/dashboard/Dashboard'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -40,6 +41,7 @@ function App() {
           }
         />
         <Route path='/' element={<Home />} />
+        <Route path='/product/:bookId' element={<BookSingle />} />
         <Route path='/shop' element={<ShopPage />} />
       </Routes>
     </Router>

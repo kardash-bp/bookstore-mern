@@ -114,7 +114,7 @@ function updateProduct(req, res) {
 async function productById(req, res, next) {
   const id = req.params.id
   try {
-    const product = await Product.findById(id)
+    const product = await Product.findById(id).populate('category', '_id name')
     req.product = product
 
     next()
@@ -194,7 +194,7 @@ async function categoriesByProduct(req, res) {
  * as the user clicks on those checkbox and radio buttons
  *  send request and show the products to users based on what he wants
  */
-async function productsSearch(req, res) {
+async function productsFilterSearch(req, res) {
   let order = req.body.order ? req.body.order : 'desc'
   let sortBy = req.body.sortBy ? req.body.sortBy : '_id'
   let limit = req.body.limit ? parseInt(req.body.limit) : 20
@@ -235,6 +235,36 @@ async function productsSearch(req, res) {
     res.status(400).json({ error: `Didn't find anything. - ${err.message}` })
   }
 }
+
+/**
+ * products in category search for string
+ */
+async function productsSearch(req, res) {
+  let text = req.query.text
+  let catId = req.query.category
+  const q =
+    catId === 'all'
+      ? {
+          name: { $regex: `${text}`, $options: 'i' },
+        }
+      : {
+          name: { $regex: `${text}`, $options: 'i' },
+          category: `${catId}`,
+        }
+  try {
+    const result = await Product.find(q)
+      .select('-photo')
+      .limit(10)
+      .populate('category', '_id name')
+
+    res.json(result)
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ error: `Product not found. - ${err.message}` })
+  }
+}
+
 function productPhoto(req, res, next) {
   if (req.product.photo.data) {
     res.set('Content-Type', req.product.photo.contentType)
@@ -252,5 +282,6 @@ module.exports = {
   productsRelated,
   categoriesByProduct,
   productsSearch,
+  productsFilterSearch,
   productPhoto,
 }

@@ -58,6 +58,14 @@ div.card:hover {
   box-shadow: 1px 3px 15px -1px rgba(0, 0, 0, 0.74);
   z-index: 99;
 }
+a.btn.btn-card {
+  background-color: var(--eggshell);
+  transition: all 0.3s;
+}
+a.btn.btn-card:hover {
+  background-color: var(--grey);
+  color: var(--bg-light);
+}
 /* checkbox color */
 .form-check-input[type='checkbox'] {
   background-color: var(--bg-light);
@@ -69,4 +77,16 @@ div.card:hover {
 }
 .form-check-input[type='checkbox']:focus {
   box-shadow: 0 0 0 0.25rem rgba(61, 61, 61, 0.25);
+}
+input.form-control {
+  background-color: var(--eggshell);
+}
+input.form-control:focus {
+  border: 2px solid var(--red-light);
+}
+.container-lg {
+  background-color: var(--red-light);
+}
+.container-lg h2 {
+  color: var(--vanilla);
 }

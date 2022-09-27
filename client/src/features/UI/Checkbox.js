@@ -32,7 +32,9 @@ const Checkbox = ({ filMet, data, filtersHandler }) => {
 
   useEffect(() => {
     filtersHandler(checked, filMet)
-  }, [checked])
+  }, [checked, filMet])
+
+  console.log('check rendered')
 
   return data.map((c, i) => (
     <li key={i} className='list-unstyled mb-3'>
@@ -47,4 +49,4 @@ const Checkbox = ({ filMet, data, filtersHandler }) => {
   ))
 }
 
-export default Checkbox
+export default React.memo(Checkbox)

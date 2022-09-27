@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import AppLayout from '../../layout/appLayout/AppLayout'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import ShopSidebar from './ShopSidebar'
-import { getCategories } from '../../features/services/adminApi'
 import { getProductsFiltered } from '../../features/services/productApi'
 import ProductCard from '../../features/UI/ProductCard'
+import useCategories from '../../hooks/useCategories'
 
 const ShopPage = () => {
   const [products, setProducts] = useState([])
@@ -15,30 +15,17 @@ const ShopPage = () => {
     category: [],
     price: [],
   })
-  const [categories, setCategories] = useState([])
+  const [categories, err] = useCategories()
   const [error, setError] = useState(false)
   const { limit, skip, size } = query
-  const init = async () => {
-    try {
-      const data = await getCategories()
 
-      if (data.error) {
-        setError(data.error)
-      } else {
-        setCategories(data)
-      }
-    } catch (err) {
-      console.log(err.message)
-      setError(err.message)
-    }
-  }
-  const filtersHandler = (filters, filterMethod) => {
+  const filtersHandler = useCallback((filters, filterMethod) => {
     const newFilters = shopFilters
     newFilters[filterMethod] = filters
     setShopFilters({ ...newFilters })
     setQuery((prev) => ({ ...prev, skip: 0 }))
-  }
-  const loadProducts = async () => {
+  }, [])
+  const loadProducts = useCallback(async () => {
     const data = await getProductsFiltered(limit, skip, shopFilters)
     if (!data.data) {
       setError('PRODUCTS NOT AVAILABLE.')
@@ -46,7 +33,7 @@ const ShopPage = () => {
       setProducts(data.data)
       setQuery((prev) => ({ ...prev, skip: 0, size: data.size }))
     }
-  }
+  }, [])
   const loadMoreProducts = async () => {
     let newSkip = skip + limit
 
@@ -62,14 +49,12 @@ const ShopPage = () => {
       }))
     }
   }
-  useEffect(() => {
-    init()
-  }, [])
 
   useEffect(() => {
     loadProducts()
   }, [shopFilters])
-  console.log('error: ' + error)
+
+  console.log(error, err)
   return (
     <AppLayout
       title='Shop Page'
@@ -82,7 +67,9 @@ const ShopPage = () => {
           <h2>Browse Books</h2>
           <Row>
             {products.map((product, i) => (
-              <ProductCard key={i} product={product} />
+              <Col key={i} md={6} lg={4} className='mt-3'>
+                <ProductCard key={i} product={product} />
+              </Col>
             ))}
             {size >= limit && (
               <Button
@@ -101,4 +88,4 @@ const ShopPage = () => {
   )
 }
 
-export default ShopPage
+export default React.memo(ShopPage)
