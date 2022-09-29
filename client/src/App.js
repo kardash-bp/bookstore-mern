@@ -5,6 +5,7 @@ import ProtectedRoute from './features/utils/ProtectedRoute'
 import AddCategory from './pages/admin/AddCategory'
 import AddProduct from './pages/admin/AddProduct'
 import BookSingle from './pages/BookSingle.js'
+import Cart from './pages/Cart'
 import Dashboard from './pages/dashboard/Dashboard'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -43,6 +44,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/product/:bookId' element={<BookSingle />} />
         <Route path='/shop' element={<ShopPage />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </Router>
   )

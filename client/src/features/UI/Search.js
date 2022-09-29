@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { BsSearch } from 'react-icons/bs'
 import useCategories from '../../hooks/useCategories'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -61,7 +62,7 @@ const Search = () => {
             />
 
             <Button type='submit' variant='outline-secondary'>
-              Search
+              <BsSearch />
             </Button>
           </InputGroup>
         </Form>

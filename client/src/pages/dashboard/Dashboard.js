@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AppLayout from '../../layout/appLayout/AppLayout'
 import { isAuth } from '../../features/services/authRequests'
 import UserInformationDash from './UserInformationDash'
@@ -7,12 +7,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import UserLinksDash from './UserLinksDash'
 import AdminLinksDash from './AdminLinksDash'
+import { Context } from '../../Context'
 const Dashboard = () => {
   const { user } = isAuth()
+  const data = useContext(Context)
   return (
     <AppLayout
       title='Dashboard'
-      description={`${user.name} Dashboard`}
+      description={`${data} Dashboard`}
       className='container'
     >
       <Row>

@@ -7,7 +7,18 @@ export const getBook = async (id) => {
     if (!data) {
       throw new Error('Products not found.')
     }
-    console.log(data)
+    return data
+  } catch (err) {
+    console.log('Products:' + err.message)
+    return { error: err.message }
+  }
+}
+export const relatedBooks = async (id) => {
+  try {
+    const { data } = await axios.get(`${API}/product/all/related/${id}`)
+    if (!data) {
+      throw new Error('Products not found.')
+    }
     return data
   } catch (err) {
     console.log('Products:' + err.message)

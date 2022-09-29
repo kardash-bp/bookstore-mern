@@ -2,11 +2,17 @@ import React from 'react'
 import moment from 'moment'
 
 import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
 import { Link } from 'react-router-dom'
 import { API } from '../../config'
-
+import { UseCartContext } from '../../Context'
+import { addToCart } from '../../pages/Cart/cartServices'
 const ProductCard = ({ product, showButton = true }) => {
+  const [cart, setCart] = UseCartContext()
+
+  const handleClick = () => {
+    addToCart(product, cart, setCart)
+  }
+  console.log('product card rere')
   return (
     <Card>
       <Card.Img
@@ -54,7 +60,11 @@ const ProductCard = ({ product, showButton = true }) => {
             View Product
           </Link>
         )}
-        <button className='my-2 btn-card'>Add to Cart</button>
+        {product.quantity > 0 && (
+          <button className='my-2 btn-card' onClick={handleClick}>
+            Add to Cart
+          </button>
+        )}
       </Card.Body>
     </Card>
   )
