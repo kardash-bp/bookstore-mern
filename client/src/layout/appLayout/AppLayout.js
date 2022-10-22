@@ -12,7 +12,7 @@ const AppLayout = ({
     <>
       <NavBar />
       <div className='px-5 pt-5 mb-5 jumbotron'>
-        <h2 className='display-4'>{title}</h2>
+        <h2 className='display-3'>{title}</h2>
         <p className='lead'>{description}</p>
         <hr className='my-4'></hr>
       </div>

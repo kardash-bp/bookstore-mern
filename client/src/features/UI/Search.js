@@ -4,6 +4,7 @@ import useCategories from '../../hooks/useCategories'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -83,7 +84,10 @@ const Search = () => {
                 : `${results.length} results`}
             </h2>
             {results.map((p, i) => (
-              <ProductCard key={i} product={p} />
+              <Col md={4}>
+                {' '}
+                <ProductCard key={i} product={p} />
+              </Col>
             ))}
           </Row>
         </Container>

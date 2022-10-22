@@ -1,11 +1,17 @@
 const { Router } = require('express')
 const { authenticateJWT, isAdmin } = require('../../middlewareFn/authJWT')
-const { userById, getProfile, updateProfile } = require('./user.controller')
+const {
+  userById,
+  getProfile,
+  updateProfile,
+  userOrdersHistory,
+} = require('./user.controller')
 const userRouter = Router()
 
 userRouter.param('userId', userById)
 
-userRouter.get('/:userId', authenticateJWT, isAdmin, getProfile)
-userRouter.put('/:userId', authenticateJWT, isAdmin, updateProfile)
+userRouter.get('/order/:id', authenticateJWT, userOrdersHistory)
+userRouter.get('/:userId', authenticateJWT, getProfile)
+userRouter.put('/:userId', authenticateJWT, updateProfile)
 
 module.exports = userRouter

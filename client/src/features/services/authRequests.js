@@ -32,7 +32,6 @@ export const registerUser = async (user, values, setValues) => {
 export const loginUser = async (user, values, setValues) => {
   try {
     const { data } = await axios.post(`${API}/auth/login`, user)
-    console.log(data)
     if (!data) {
       throw new Error('You are not logged in. Try again.')
     } else {
@@ -65,7 +64,6 @@ export const logoutUser = async (cb) => {
     }
     try {
       const response = await axios.get(`${API}/auth/logout`)
-      console.log(response)
       cb()
       return response
     } catch (err) {
@@ -82,8 +80,14 @@ export const authenticatedUser = (data, cb) => {
 export const isAuth = () => {
   if (typeof window === 'undefined') return false
   if (localStorage.getItem('jwt')) {
+    const { token } = JSON.parse(localStorage.getItem('jwt'))
+    if (isTokenExpired(token)) {
+      localStorage.removeItem('jwt')
+      return false
+    }
     return JSON.parse(localStorage.getItem('jwt'))
   } else {
+    localStorage.removeItem('jwt')
     return false
   }
 }
@@ -96,6 +100,25 @@ export const isAdmin = () => {
   ) {
     return JSON.parse(localStorage.getItem('jwt'))
   } else {
+    localStorage.removeItem('jwt')
     return false
   }
+}
+
+export function isTokenExpired(token) {
+  if (!token) return false
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      })
+      .join('')
+  )
+
+  const { exp } = JSON.parse(jsonPayload)
+  const expired = Date.now() >= exp * 1000
+  return expired
 }

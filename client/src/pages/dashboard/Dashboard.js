@@ -1,30 +1,37 @@
-import React, { useContext } from 'react'
-import AppLayout from '../../layout/appLayout/AppLayout'
+import React from 'react'
 import { isAuth } from '../../features/services/authRequests'
 import UserInformationDash from './UserInformationDash'
 import PurchaseHistoryDash from './PurchaseHistoryDash'
+import AppLayout from '../../layout/appLayout/AppLayout'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import UserLinksDash from './UserLinksDash'
 import AdminLinksDash from './AdminLinksDash'
-import { Context } from '../../Context'
+import { firstUpperCase } from '../../features/utils/firstUpperCase'
 const Dashboard = () => {
   const { user } = isAuth()
-  const data = useContext(Context)
   return (
     <AppLayout
       title='Dashboard'
-      description={`${data} Dashboard`}
+      description={`${firstUpperCase(user.name)} / ${
+        user.role === 1 ? 'adimn' : 'user'
+      } `}
       className='container'
     >
       <Row>
-        <Col md={3}>
-          {user.role === 1 ? <AdminLinksDash /> : <UserLinksDash />}
+        <Col md={4}>
+          {user.role === 1 ? (
+            <AdminLinksDash userId={user._id} />
+          ) : (
+            <UserLinksDash userId={user._id} />
+          )}
         </Col>
-        <Col md={9}>
+        <Col md={8}>
           <UserInformationDash user={user} />
-          <PurchaseHistoryDash user={user} />
         </Col>
+      </Row>
+      <Row>
+        <PurchaseHistoryDash history={user.history} />
       </Row>
     </AppLayout>
   )

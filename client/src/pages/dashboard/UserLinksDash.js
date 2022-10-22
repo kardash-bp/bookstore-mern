@@ -2,7 +2,8 @@ import React from 'react'
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Link } from 'react-router-dom'
-const UserLinksDash = () => {
+import { isAuth } from '../../features/services/authRequests'
+const UserLinksDash = ({ userId }) => {
   return (
     <Card className='mb-4'>
       <Card.Body>
@@ -14,7 +15,7 @@ const UserLinksDash = () => {
             </Link>
           </ListGroup.Item>
           <ListGroup.Item>
-            <Link to='/profile/update' className='nav-item nav-link'>
+            <Link to={`/profile/${userId}`} className='nav-item nav-link'>
               Update Profile
             </Link>
           </ListGroup.Item>

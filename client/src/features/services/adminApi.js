@@ -17,6 +17,60 @@ export const getCategories = async (token) => {
     return { error: err.message }
   }
 }
+export const allOrders = async (userId, token) => {
+  try {
+    const { data } = await axios.get(`${API}/order/all/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if (!data) {
+      throw new Error('Something went wrong. Retrieving orders failed')
+    }
+    //console.log(data)
+    return data
+  } catch (err) {
+    console.log('Orders:' + err.message)
+    return { error: err.message }
+  }
+}
+export const statusOrder = async (userId, token) => {
+  try {
+    const { data } = await axios.get(`${API}/order/status/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if (!data) {
+      throw new Error('Something went wrong. Retrieving orders failed')
+    }
+    return data
+  } catch (err) {
+    console.log('Orders:' + err.message)
+    return { error: err.message }
+  }
+}
+export const updateStatusOrder = async (orderId, userId, token, status) => {
+  try {
+    const { data } = await axios.put(
+      `${API}/order/update-status/${orderId}/${userId}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    if (!data) {
+      throw new Error('Something went wrong. Retrieving orders failed')
+    }
+    console.log(data)
+    return data
+  } catch (err) {
+    console.log('Orders:' + err.message)
+    return { error: err.message }
+  }
+}
 
 export const createCategory = async (userId, token, category) => {
   try {

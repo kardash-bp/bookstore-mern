@@ -34,8 +34,6 @@ const Checkbox = ({ filMet, data, filtersHandler }) => {
     filtersHandler(checked, filMet)
   }, [checked, filMet])
 
-  console.log('check rendered')
-
   return data.map((c, i) => (
     <li key={i} className='list-unstyled mb-3'>
       <Form.Check

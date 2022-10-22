@@ -65,9 +65,9 @@ const LoginForm = () => {
           />
         </FloatingLabel>
         <div className='d-grid'>
-          <Button variant='primary' size='lg' type='submit'>
-            Submit
-          </Button>
+          <button size='lg' type='submit' className='btn-card'>
+            Login
+          </button>
         </div>
       </Form>
     )

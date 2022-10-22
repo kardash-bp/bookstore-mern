@@ -9,9 +9,15 @@ const authenticateJWT = (req, res, next) => {
     token = req.cookies.t
   }
   if (token) {
+    const decodedToken = jwt.decode(token)
+    if (decodedToken.exp * 1000 < new Date().getTime()) {
+      return res
+        .status(403)
+        .json({ error: '403 Access denied. Token expired. ' })
+    }
+
     try {
       const tokenData = jwt.verify(token, process.env.JWT_SECRET)
-      // console.log(tokenData)
       req.body._id = tokenData._id
       req.body.role = tokenData.role
       next()

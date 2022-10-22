@@ -19,7 +19,6 @@ function getProduct(req, res) {
 }
 
 function addProduct(req, res) {
-  console.log(req.body)
   let form = new formidable.IncomingForm()
   // Basic Configuration
   form.keepExtensions = true
@@ -63,56 +62,35 @@ function addProduct(req, res) {
   })
 }
 // update product ======================================
-function updateProduct(req, res) {
-  let form = new formidable.IncomingForm()
-  // Basic Configuration
-  form.keepExtensions = true
-  form.multiples = true
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({ error: 'Image could not be uploaded' })
-    }
-    let product = req.product
-    product = updateObject(product, fields)
-    console.log(product)
-    if (
-      !checkKeyInObject(product, [
-        'name',
-        'description',
-        'price',
-        'category',
-        'quantity',
-      ])
-    ) {
-      return res.status(400).json({ error: 'All fields are required.' })
-    }
+async function updateProduct(req, res) {
+  let product = req.product
+  product._id = req.params.productId
+  product = updateObject(product, req.body)
 
-    if (files.photo.size > 1 * 1024 * 1024) {
-      return res.status(400).json({ error: 'Image should be less than 1mb' })
+  try {
+    const updated = await Product.findOneAndUpdate(
+      { _id: req.params.productId },
+      { ...product, _id: product.id },
+      { new: true }
+    )
+    if (!updated) {
+      throw new Error("Product isn't stored.")
     }
-    if (files.photo && isFileValid(files.photo)) {
-      product.photo.data = fs.readFileSync(files.photo.filepath)
-      product.photo.contentType = files.photo.mimetype
-    }
-    try {
-      const savedProduct = await Product.findByIdAndUpdate(
-        { _id: product._id },
-        { ...product },
-        { new: true }
-      )
-      if (!savedProduct) {
-        throw new Error("Product isn't stored.")
-      }
+    console.log(updated.quantity)
 
-      res.status(200).json({ product: savedProduct })
-    } catch (error) {
-      return res.status(400).json({ error: error.message })
-    }
+    res.status(200).json(updated)
+  } catch (error) {
+    return res.status(400).json({ error: error.message })
+  }
+
+  let form = formidable({
+    multiples: true,
+    keepExtensions: true,
   })
 }
 // get product ========================================
 async function productById(req, res, next) {
-  const id = req.params.id
+  const id = req.params.productId
   try {
     const product = await Product.findById(id).populate('category', '_id name')
     req.product = product

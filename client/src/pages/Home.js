@@ -41,6 +41,7 @@ const Home = () => {
     loadProductsBySell()
     loadProductsByArrival()
   }, [])
+
   return (
     <AppLayout title='Home Page'>
       <Suspense fallback={<Spinner />}>

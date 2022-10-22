@@ -54,7 +54,9 @@ const ShopPage = () => {
     loadProducts()
   }, [shopFilters])
 
-  console.log(error, err)
+  if (error) {
+    console.log(error, err)
+  }
   return (
     <AppLayout
       title='Shop Page'
@@ -63,11 +65,11 @@ const ShopPage = () => {
     >
       <Row>
         <ShopSidebar categories={categories} filtersHandler={filtersHandler} />
-        <Col md={8} className='mb-5'>
+        <Col md={7} className='mb-5'>
           <h2>Browse Books</h2>
           <Row>
             {products.map((product, i) => (
-              <Col key={i} md={6} lg={4} className='mt-3'>
+              <Col key={i} lg={6} className='mt-3'>
                 <ProductCard key={i} product={product} />
               </Col>
             ))}

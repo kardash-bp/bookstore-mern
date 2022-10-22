@@ -65,3 +65,48 @@ export const getProductsSearch = async (text, category) => {
     return err.message
   }
 }
+//* Products management Admins only *******************************
+export const getAll = async () => {
+  try {
+    const { data } = await axios.get(
+      `${API}/product/all?order=desc&limit=undefined`
+    )
+    if (!data) {
+      throw new Error('Products not found.')
+    }
+    return data
+  } catch (err) {
+    console.log('Products:' + err.message)
+    return { error: err.message }
+  }
+}
+export const deleteProduct = async (id, token) => {
+  try {
+    await axios.delete(`${API}/product/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    return { msg: `Product deleted successfully.` }
+  } catch (err) {
+    console.log('Products:' + err.message)
+    return { error: err.message }
+  }
+}
+export const updateProduct = async (userId, token, product) => {
+  try {
+    const { data } = await axios.put(
+      `${API}/product/update/${userId}/${product.id}`,
+      product,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    if (!data) {
+      throw new Error('Products not found.')
+    }
+    return data
+  } catch (err) {
+    console.log('Update:' + err.message)
+    return { error: err.message }
+  }
+}

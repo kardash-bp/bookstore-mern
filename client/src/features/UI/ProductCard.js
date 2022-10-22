@@ -5,14 +5,13 @@ import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 import { API } from '../../config'
 import { UseCartContext } from '../../Context'
-import { addToCart } from '../../pages/Cart/cartServices'
+import { addToCart } from '../services/cartServices'
 const ProductCard = ({ product, showButton = true }) => {
   const [cart, setCart] = UseCartContext()
 
   const handleClick = () => {
     addToCart(product, cart, setCart)
   }
-  console.log('product card rere')
   return (
     <Card>
       <Card.Img
@@ -24,10 +23,7 @@ const ProductCard = ({ product, showButton = true }) => {
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>
           {showButton
-            ? product.description
-                .split(' ')
-                .slice(0, 15)
-                .join(' ')
+            ? product.description.split(' ').slice(0, 15).join(' ')
             : product.description}
           {!showButton && '...'}
         </Card.Text>
@@ -60,7 +56,7 @@ const ProductCard = ({ product, showButton = true }) => {
             View Product
           </Link>
         )}
-        {product.quantity > 0 && (
+        {product.quantity > 0 && Object.keys(cart.user).length > 0 && (
           <button className='my-2 btn-card' onClick={handleClick}>
             Add to Cart
           </button>

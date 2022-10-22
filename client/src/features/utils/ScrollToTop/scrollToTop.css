@@ -1,0 +1,58 @@
+.scroll-btm {
+  position: relative;
+}
+.icon-position {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+
+  z-index: 20;
+}
+.icon-style {
+  background-color: var(--red-light);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  color: var(--vanilla);
+  cursor: pointer;
+  opacity: 0.5;
+  animation-name: fadeIn, move-btn;
+  animation-duration: 1s, 3s;
+  animation-iteration-count: 1, infinite;
+  animation-timing-function: ease, ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+.icon-style:hover {
+  animation: none;
+  opacity: 1;
+  background: var(--red);
+  color: var(--eggshell);
+}
+@keyframes move-btn {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 0.5;
+  }
+}

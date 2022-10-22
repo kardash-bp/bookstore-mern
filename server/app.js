@@ -7,6 +7,8 @@ const authRouter = require('./routes/auth/auth.router')
 const userRouter = require('./routes/user/user.router')
 const catRouter = require('./routes/category/category.router')
 const productRouter = require('./routes/product/product.router')
+const paymentRouter = require('./routes/payments/payments.router')
+const orderRouter = require('./routes/order/order.router')
 const app = express()
 
 app.use(
@@ -17,6 +19,7 @@ app.use(
 app.use(helmet())
 app.use(morgan('tiny'))
 app.use(express.json())
+app.use(express.urlencoded())
 app.use(express.static('public'))
 app.use(cookieParser())
 
@@ -24,6 +27,8 @@ app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/category', catRouter)
 app.use('/product', productRouter)
+app.use('/payments', paymentRouter)
+app.use('/order', orderRouter)
 
 app.get('/', (req, res) => {
   // Cookies that have not been signed

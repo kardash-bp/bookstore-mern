@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import AppLayout from '../../layout/appLayout/AppLayout'
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel'
 import Form from 'react-bootstrap/Form'
@@ -9,21 +9,29 @@ import { createProduct, getCategories } from '../../features/services/adminApi'
 import AlertMessage from '../../features/UI/AlertMessage'
 import { firstUpperCase } from '../../features/utils/firstUpperCase'
 import Spinner from 'react-bootstrap/Spinner'
-const AddProduct = () => {
+import { UseCartContext } from '../../Context'
+import { updateProduct } from '../../features/services/productApi'
+
+const initialState = {
+  name: '',
+  description: '',
+  price: '',
+  categories: [],
+  category: '',
+  shipping: false,
+  quantity: '',
+  photo: '',
+  loading: false,
+  error: false,
+  success: false,
+}
+
+const AddEditProduct = () => {
+  const [cart, setCart] = UseCartContext()
+  const [searchParams] = useSearchParams()
+  const flag = searchParams.get('flag') || ''
   const navigate = useNavigate()
-  const [state, setState] = useState({
-    name: '',
-    description: '',
-    price: '',
-    categories: [],
-    category: '',
-    shipping: false,
-    quantity: '',
-    photo: '',
-    loading: '',
-    error: false,
-    success: false,
-  })
+  const [state, setState] = useState(initialState)
   const { token, user } = isAuth()
   const {
     photo,
@@ -44,12 +52,16 @@ const AddProduct = () => {
     const allCategories = async () => {
       const catArr = await getCategories(token)
       if (isSubscribed) {
-        setState({ ...state, categories: catArr })
+        if (flag === 'update') {
+          setState({ ...cart.editBook, categories: catArr })
+        } else {
+          setState({ ...state, categories: catArr })
+        }
       }
     }
     allCategories()
     return () => (isSubscribed = false)
-  }, [])
+  }, [flag])
 
   const handleChange = (fieldName) => (e) => {
     let value = fieldName === 'photo' ? e.target.files[0] : e.target.value
@@ -63,31 +75,53 @@ const AddProduct = () => {
     e.preventDefault()
     setState({ ...state, error: false, loading: true })
     try {
-      const data = await createProduct(token, {
-        name,
-        description,
-        photo,
-        price,
-        quantity,
-        shipping,
-        category,
-      })
-      if (data.error) {
+      if (!name || !price || !quantity) return
+      let data = false
+      if (flag === 'add') {
+        data = await createProduct(token, {
+          name,
+          description,
+          photo,
+          price,
+          quantity,
+          shipping,
+          category,
+        })
+      } else {
+        data = await updateProduct(user._id, token, {
+          id: state._id,
+          name,
+          description,
+          photo,
+          price,
+          quantity,
+          shipping,
+          category,
+        })
+      }
+      console.log('data', data)
+      if (data.error || !data) {
+        console.log('No data response')
         setState({ ...state, error: true, success: false, loading: false })
       } else {
-        setState({ ...state, error: false, success: true, loading: false })
+        setCart((prev) => ({ ...prev, editBook: {} }))
+        if (flag === 'update') {
+          navigate(-1)
+        }
+        setState({ ...initialState, success: true })
       }
     } catch (err) {
       console.log('error: ' + err.message)
       setState({ name: '', error: true, success: false, loading: false })
     }
   }
+  //console.log('state:', state)
   return (
     <AppLayout
-      title='Add a new product'
+      title={flag === 'update' ? 'Edit Book Details  ' : 'Add a new product'}
       description={`Admin: ${firstUpperCase(user.name)} `}
     >
-      {loading && (
+      {loading && error !== true && (
         <Spinner animation='border' role='status'>
           <span className='visually-hidden'>Loading...</span>
         </Spinner>
@@ -97,10 +131,20 @@ const AddProduct = () => {
         className='col-md-10 offset-md-1'
         encType='multipart/form-data'
       >
-        {success && (
-          <AlertMessage variant='success' msg={`${name} is created`} />
+        {success && flag === 'add' && (
+          <div>
+            <AlertMessage variant='success' msg={`Book is added. Another?`} />
+            <Button
+              type='link'
+              variant='outline-secondary'
+              onClick={() => navigate(-1)}
+              className='ms-3 mb-4'
+            >
+              View all books list
+            </Button>
+          </div>
         )}
-        {error && (
+        {error && flag === 'add' && (
           <AlertMessage variant='danger' msg={`Product is not added.`} />
         )}
         <FloatingLabel
@@ -194,21 +238,21 @@ const AddProduct = () => {
         </Form.Group>
 
         <hr className='my-4'></hr>
-        <Button type='submit' variant='outline-primary'>
-          Add Product
+        <Button type='submit' variant='outline-danger'>
+          {flag === 'add' ? 'Add Book' : 'Update Book'}
         </Button>
 
         <Button
           type='link'
-          variant='outline-info'
+          variant='outline-secondary'
           onClick={() => navigate(-1)}
           className='ms-3'
         >
-          Back to Dashboard
+          Go Back
         </Button>
       </Form>
     </AppLayout>
   )
 }
 
-export default AddProduct
+export default AddEditProduct
