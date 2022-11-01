@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import AppLayout from '../../layout/appLayout/AppLayout'
+import AppLayout from '../layout/appLayout/AppLayout'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import ShopSidebar from './ShopSidebar'
-import { getProductsFiltered } from '../../features/services/productApi'
-import ProductCard from '../../features/UI/ProductCard'
-import useCategories from '../../hooks/useCategories'
+import ShopSidebar from '../features/UI/ShopSidebar'
+import { getProductsFiltered } from '../features/services/productApi'
+import ProductCard from '../features/UI/ProductCard'
+import useCategories from '../hooks/useCategories'
 
 const ShopPage = () => {
   const [products, setProducts] = useState([])

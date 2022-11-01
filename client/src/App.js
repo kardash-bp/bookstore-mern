@@ -5,9 +5,9 @@ import CheckoutPurchasing from './features/UI/CheckoutPurchasing'
 import Orders from './features/UI/Orders'
 import ProtectedRoute from './features/utils/ProtectedRoute'
 import ScrollToTop from './features/utils/ScrollToTop/ScrollToTop'
-import AddCategory from './pages/admin/AddCategory'
+import AddCategory from './pages/AddCategory'
 
-import BookSingle from './pages/BookSingle.js/index.js'
+import BookSingle from './pages/BookSingle'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Spinner from 'react-bootstrap/Spinner'
@@ -17,7 +17,7 @@ const ShopPage = lazy(() => import('./pages/ShopPage'))
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'))
 const Register = lazy(() => import('./pages/Register'))
 const Products = lazy(() => import('./pages/Products'))
-const AddEditProduct = lazy(() => import('./pages/admin/AddEditProduct'))
+const AddEditProduct = lazy(() => import('./pages/AddEditProduct'))
 
 function App() {
   return (

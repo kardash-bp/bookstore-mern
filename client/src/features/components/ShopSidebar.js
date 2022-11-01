@@ -1,7 +1,7 @@
 import React from 'react'
 import Col from 'react-bootstrap/Col'
-import { prices } from '../../features/prices/fixedPricesRange'
-import Checkbox from '../../features/UI/Checkbox'
+import { prices } from '../prices/fixedPricesRange'
+import Checkbox from './Checkbox'
 
 const ShopSidebar = ({ categories, filtersHandler }) => {
   return (

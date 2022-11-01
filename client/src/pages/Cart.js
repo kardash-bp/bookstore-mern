@@ -1,13 +1,13 @@
 import React from 'react'
-import { UseCartContext } from '../../Context'
+import { UseCartContext } from '../Context'
 import { BsCartDash, BsCartPlus, BsCartXFill } from 'react-icons/bs'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Link } from 'react-router-dom'
-import AppLayout from '../../layout/appLayout/AppLayout'
-import { API } from '../../config'
+import AppLayout from '../layout/appLayout/AppLayout'
+import { API } from '../config'
 import {
   addToCart,
   removeFromCart,
@@ -15,8 +15,8 @@ import {
   removeBookFromCart,
   removeAllFromCart,
   totalBook,
-} from '../../features/services/cartServices'
-import Checkout from '../../features/UI/Checkout'
+} from '../features/services/cartServices'
+import Checkout from '../features/UI/Checkout'
 //todo uradi cart tabelu
 const Cart = () => {
   const [cart, setCart] = UseCartContext()

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getBook, relatedBooks } from '../../features/services/productApi'
-import ProductCard from '../../features/UI/ProductCard'
+import { getBook, relatedBooks } from '../features/services/productApi'
+import ProductCard from '../features/UI/ProductCard'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import AppLayout from '../../layout/appLayout/AppLayout'
+import AppLayout from '../layout/appLayout/AppLayout'
 const BookSingle = () => {
   const { bookId } = useParams()
   const [book, setBook] = useState({})
@@ -22,14 +22,14 @@ const BookSingle = () => {
   useEffect(() => {
     fetchBook(bookId).catch(console.error)
   }, [fetchBook, bookId])
-
+  console.log(book)
   return (
     <AppLayout title={book && book.name}>
       <Row>
         <Col md={8}>
           {' '}
           {book && book.name && (
-            <ProductCard product={book} showButton={false} />
+            <ProductCard product={book} showButton={false} flag='big' />
           )}
         </Col>
         <Col md={4}>

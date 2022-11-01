@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import AppLayout from '../../layout/appLayout/AppLayout'
+import AppLayout from '../layout/appLayout/AppLayout'
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { isAuth } from '../../features/services/authRequests'
-import { createProduct, getCategories } from '../../features/services/adminApi'
-import AlertMessage from '../../features/UI/AlertMessage'
-import { firstUpperCase } from '../../features/utils/firstUpperCase'
+import { isAuth } from '../features/services/authRequests'
+import { createProduct, getCategories } from '../features/services/adminApi'
+import AlertMessage from '../features/UI/AlertMessage'
+import { firstUpperCase } from '../features/utils/firstUpperCase'
 import Spinner from 'react-bootstrap/Spinner'
-import { UseCartContext } from '../../Context'
-import { updateProduct } from '../../features/services/productApi'
+import { UseCartContext } from '../Context'
+import { updateProduct } from '../features/services/productApi'
 
 const initialState = {
   name: '',
