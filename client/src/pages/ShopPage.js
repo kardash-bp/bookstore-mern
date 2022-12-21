@@ -3,14 +3,16 @@ import AppLayout from '../layout/appLayout/AppLayout'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import ShopSidebar from '../features/UI/ShopSidebar'
+import ShopSidebar from '../features/components/ShopSidebar'
 import { getProductsFiltered } from '../features/services/productApi'
-import ProductCard from '../features/UI/ProductCard'
+import ProductCard from '../features/components/ProductCard'
 import useCategories from '../hooks/useCategories'
-
+import { TbLayoutSidebarLeftExpand } from 'react-icons/tb'
+import FilterModal from '../features/components/FilterModal'
 const ShopPage = () => {
   const [products, setProducts] = useState([])
   const [query, setQuery] = useState({ limit: 6, skip: 0, size: 6 })
+  const [toggleSidebar, setToggleSidebar] = useState(false)
   const [shopFilters, setShopFilters] = useState({
     category: [],
     price: [],
@@ -19,12 +21,15 @@ const ShopPage = () => {
   const [error, setError] = useState(false)
   const { limit, skip, size } = query
 
-  const filtersHandler = useCallback((filters, filterMethod) => {
-    const newFilters = shopFilters
-    newFilters[filterMethod] = filters
-    setShopFilters({ ...newFilters })
-    setQuery((prev) => ({ ...prev, skip: 0 }))
-  }, [])
+  const filtersHandler = useCallback(
+    (filters, filterMethod) => {
+      const newFilters = shopFilters
+      newFilters[filterMethod] = filters
+      setShopFilters({ ...newFilters })
+      setQuery((prev) => ({ ...prev, skip: 0 }))
+    },
+    [shopFilters]
+  )
   const loadProducts = useCallback(async () => {
     const data = await getProductsFiltered(limit, skip, shopFilters)
     if (!data.data) {
@@ -33,7 +38,7 @@ const ShopPage = () => {
       setProducts(data.data)
       setQuery((prev) => ({ ...prev, skip: 0, size: data.size }))
     }
-  }, [])
+  }, [limit, skip, shopFilters])
   const loadMoreProducts = async () => {
     let newSkip = skip + limit
 
@@ -49,10 +54,13 @@ const ShopPage = () => {
       }))
     }
   }
+  const handleResetToggle = () => {
+    setToggleSidebar(false)
+  }
 
   useEffect(() => {
     loadProducts()
-  }, [shopFilters])
+  }, [loadProducts])
 
   if (error) {
     console.log(error, err)
@@ -65,11 +73,29 @@ const ShopPage = () => {
     >
       <Row>
         <ShopSidebar categories={categories} filtersHandler={filtersHandler} />
-        <Col md={7} className='mb-5'>
-          <h2>Browse Books</h2>
+        <Col md={12} lg={9} className='mb-5'>
+          <span
+            onClick={() => setToggleSidebar(!toggleSidebar)}
+            style={{ color: '#e98074', cursor: 'pointer' }}
+          >
+            {' '}
+            <TbLayoutSidebarLeftExpand
+              size={32}
+              className={!toggleSidebar ? 'd-lg-none mt-3' : 'mt-3'}
+            />
+          </span>
+
+          {toggleSidebar && (
+            <FilterModal
+              toggle={toggleSidebar}
+              resetToggle={handleResetToggle}
+              filtersHandler={filtersHandler}
+              categories={categories}
+            />
+          )}
           <Row>
             {products.map((product, i) => (
-              <Col key={i} lg={6} className='mt-3'>
+              <Col key={i} sm={6} md={4} lg={4} className='mt-3'>
                 <ProductCard key={i} product={product} />
               </Col>
             ))}

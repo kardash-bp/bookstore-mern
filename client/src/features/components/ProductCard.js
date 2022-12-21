@@ -10,7 +10,7 @@ import { addToCart } from '../services/cartServices'
 import ProductCardImage from './ProductCardImage'
 const ProductCard = ({ product, showButton = true, flag = 'small' }) => {
   const [cart, setCart] = UseCartContext()
-
+  console.log(product.description)
   const handleClick = () => {
     addToCart(product, cart, setCart)
   }
@@ -22,15 +22,10 @@ const ProductCard = ({ product, showButton = true, flag = 'small' }) => {
         </Col>
         <Col lg={flag !== 'small' ? 6 : 12}>
           <Card.Body>
-            <Card.Title>{product.name}</Card.Title>
+            {flag !== 'small' && <Card.Title>{product.name}</Card.Title>}
+            <p className={showButton && 'cutoff-text'}>{product.description}</p>
             <Card.Text>
-              {showButton
-                ? product.description.split(' ').slice(0, 15).join(' ')
-                : product.description}
-              {!showButton && '...'}
-            </Card.Text>
-            <Card.Text>
-              Price: <span style={{ color: '#e45b51' }}>{product.price}</span>
+              Price: <span style={{ color: '#e45b51' }}>${product.price}</span>
             </Card.Text>
             {!showButton && (
               <>

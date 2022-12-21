@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { isAuth } from '../features/services/authRequests'
 import { createCategory } from '../features/services/adminApi'
-import AlertMessage from '../features/UI/AlertMessage'
+import AlertMessage from '../features/components/AlertMessage'
 
 const AddCategory = () => {
   const navigate = useNavigate()

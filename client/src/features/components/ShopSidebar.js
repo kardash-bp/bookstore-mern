@@ -5,7 +5,7 @@ import Checkbox from './Checkbox'
 
 const ShopSidebar = ({ categories, filtersHandler }) => {
   return (
-    <Col md={4}>
+    <Col md={3} className='d-none d-lg-block'>
       <h5 className='mb-3'>Filtered by categories</h5>
       <ul>
         <Checkbox

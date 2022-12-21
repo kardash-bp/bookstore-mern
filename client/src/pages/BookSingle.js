@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getBook, relatedBooks } from '../features/services/productApi'
-import ProductCard from '../features/UI/ProductCard'
+import ProductCard from '../features/components/ProductCard'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import AppLayout from '../layout/appLayout/AppLayout'

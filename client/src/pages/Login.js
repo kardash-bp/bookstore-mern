@@ -1,6 +1,6 @@
 import React from 'react'
 import AppLayout from '../layout/appLayout/AppLayout'
-import LoginForm from '../features/UI/LoginForm'
+import LoginForm from '../features/components/LoginForm'
 
 const Login = () => {
   return (

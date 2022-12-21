@@ -16,7 +16,7 @@ import {
   removeAllFromCart,
   totalBook,
 } from '../features/services/cartServices'
-import Checkout from '../features/UI/Checkout'
+import Checkout from '../features/components/Checkout'
 //todo uradi cart tabelu
 const Cart = () => {
   const [cart, setCart] = UseCartContext()

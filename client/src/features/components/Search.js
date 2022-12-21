@@ -13,7 +13,8 @@ import { getProductsSearch } from '../services/productApi'
 import ProductCard from './ProductCard'
 const Search = () => {
   const [categories, err] = useCategories()
-  const [category, setCategory] = useState('all')
+  const [category, setCategory] = useState('')
+  const [categoryName, setCategoryName] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [results, setResults] = useState([])
   const [flag, setFlag] = useState(false)
@@ -27,20 +28,23 @@ const Search = () => {
     setSearchTerm('')
     setCategory('all')
   }
-
+  console.log(categories)
   return (
     <>
-      <div className='w-50 mb-3'>
+      <div className='w-50 my-3 md-my-0'>
         <Form onSubmit={submitHandler}>
           <InputGroup>
             <DropdownButton
               variant='outline-secondary'
-              title='All Categories'
+              title={categoryName ? categoryName : 'All Categories'}
               id='input-group-dropdown-1'
               onSelect={(eventKey) => {
                 setFlag(false)
 
                 setCategory(eventKey)
+                setCategoryName(
+                  categories.find((el) => el._id === eventKey).name
+                )
               }}
             >
               {!err &&
@@ -49,7 +53,6 @@ const Search = () => {
                     {c.name}
                   </Dropdown.Item>
                 ))}
-              <Dropdown.Item href='#'>Separated link</Dropdown.Item>
             </DropdownButton>
             <Form.Control
               type='search'

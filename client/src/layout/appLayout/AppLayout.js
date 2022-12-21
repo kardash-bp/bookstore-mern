@@ -11,7 +11,7 @@ const AppLayout = ({
   return (
     <>
       <NavBar />
-      <div className='px-5 pt-5 mb-5 jumbotron'>
+      <div className='px-5 pt-5 mb-5 jumbotron d-none d-lg-block'>
         <h2 className='display-3'>{title}</h2>
         <p className='lead'>{description}</p>
         <hr className='my-4'></hr>

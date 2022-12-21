@@ -12,7 +12,12 @@
 body {
   font-family: 'Roboto', sans-serif;
   color: var(--grey);
-  background-color: var(--bg-light);
+  background-image: repeating-linear-gradient(
+    -45deg,
+
+    #eae7dc 0 30px,
+    #f1e9df 30px 60px
+  );
 }
 nav.navbar {
   background-color: var(--vanilla);
@@ -36,26 +41,37 @@ h3 {
 /** Product card ================================================== */
 
 div.card {
-  margin-bottom: 1rem;
+  margin: 1rem auto;
+  padding: 1rem;
   background-color: var(--vanilla);
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
+div.card .card-title {
+  color: var(--red-light);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 div.card .smallImg img {
   margin: 1rem auto;
-  height: 285px;
+  max-height: 285px;
+
   width: auto;
+  max-width: 85%;
   object-fit: cover;
+}
+div.card .card-horizontal img {
+  width: 90%;
 }
 button.btn-card {
   display: inline-block;
   padding: 0.45rem 1rem;
   color: var(--vanilla);
   background-color: var(--grey);
-  border: 0.15rem solid var(--grey);
-  border-radius: 0.3rem;
+  border: 0.05rem solid var(--grey);
+  border-radius: 0.1rem;
   transition: all 0.3s;
 }
 button.btn-card:hover {
@@ -65,9 +81,9 @@ button.btn-card:hover {
 }
 
 div.card:hover {
-  transform: scale(1.05);
-  -webkit-box-shadow: 1px 3px 15px -1px rgba(0, 0, 0, 0.74);
-  box-shadow: 1px 3px 15px -1px rgba(0, 0, 0, 0.74);
+  transform: scale(1.01);
+  -webkit-box-shadow: 1px 3px 15px -1px rgba(48, 48, 48, 0.74);
+  box-shadow: 1px 3px 5px -1px rgba(51, 51, 51, 0.74);
   z-index: 99;
 }
 a.btn.btn-card {
@@ -79,6 +95,14 @@ a.btn.btn-card {
 a.btn.btn-card:hover {
   background-color: var(--grey);
   color: var(--bg-light);
+}
+.cutoff-text {
+  --max-lines: 3;
+
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines);
 }
 /** checkbox color ************************************************/
 .form-check-input[type='checkbox'] {
@@ -143,3 +167,4 @@ div.list-group-item > .orders {
   border-radius: 5px;
   padding-top: 1rem;
 }
+/** sideBar *****************************************************/

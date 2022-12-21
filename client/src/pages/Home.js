@@ -1,11 +1,11 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import AppLayout from '../layout/appLayout/AppLayout'
 import { getProducts } from '../features/services/productApi'
-import Card from '../features/UI/ProductCard'
+import Card from '../features/components/ProductCard'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
-const Search = React.lazy(() => import('../features/UI/Search'))
+const Search = React.lazy(() => import('../features/components/Search'))
 const Home = () => {
   const [productsBySell, setProductsBySell] = useState([])
   const [productsByArrival, setProductsByArrival] = useState([])

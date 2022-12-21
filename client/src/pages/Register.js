@@ -1,6 +1,6 @@
 import React from 'react'
 import AppLayout from '../layout/appLayout/AppLayout'
-import RegisterForm from '../features/UI/RegisterForm'
+import RegisterForm from '../features/components/RegisterForm'
 const Register = () => {
   return (
     <AppLayout
